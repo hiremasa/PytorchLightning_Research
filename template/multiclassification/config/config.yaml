@@ -1,0 +1,50 @@
+seed: 1
+mlflow_exp_name: 
+num_classes:
+epoch: 130
+trainer: 
+    gpus: -1
+    accumulate_grad_batches: 1
+    progress_bar_refresh_rate: 1
+    fast_dev_run: False
+    
+transform:
+    name: get_image_transforms
+    crop_size: 2800
+    image_size: 512
+
+train_loader:
+    batch_size: 12
+    shuffle: False
+    num_workers: 1
+    pin_memory: True
+    drop_last: False
+
+val_loader: 
+    batch_size: 12
+    shuffle: False
+    num_workers: 1
+    pin_memory: True
+    drop_last: False
+
+model:
+    name: tf_efficientnet_b3
+    output_dim: 
+
+optimizer:
+    name: optim.Adam
+    params:
+        lr: 1e-4
+        weight_decay: 1e-5
+    
+
+scheduler:
+    name: CosineAnnealingWarmRestarts
+    params:
+        T_0: 5
+        eta_min: 1e-6
+    
+
+loss: 
+    name: SmoothCrossEntropyLoss
+    smooth: 0.2
